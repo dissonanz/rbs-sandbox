@@ -76,15 +76,21 @@ func setOptAdminKeys(opts *client.ClientOpts, keyFile string) error {
 }
 
 func (r *RancherServer) ConfigureAuthBackend() error {
-	if r.config.LdapConfig == nil {
-		logrus.Warn("No Ldap configuration found")
+	if r.config.LdapConfig == nil && r.config.AzureadConfig == nil {
+		logrus.Warn("No Ldap or AzureAd configuration found")
 		return nil
 	}
 
-	enabled, err := ldapconfigEnabled(r.client)
-	if enabled != true {
+	ldapenabled, err := ldapconfigEnabled(r.client)
+	if ldapenabled != true && r.config.LdapConfig != nil {
 		logrus.Infof("enabling Ldap config")
 		_, err = r.client.Ldapconfig.Create(r.config.LdapConfig)
+	}
+
+	azureadenabled, err := azureadconfigEnabled(r.client)
+	if azureadenabled != true && r.config.AzureadConfig != nil {
+		logrus.Infof("enabling Azure AD config")
+		_, err = r.client.Azureadconfig.Create(r.config.AzureadConfig)
 	}
 
 	return err
@@ -243,4 +249,9 @@ func getRancherClient(opts *client.ClientOpts) (*client.RancherClient, error) {
 func ldapconfigEnabled(rClient *client.RancherClient) (bool, error) {
 	ldapconfig, err := rClient.Ldapconfig.List(&client.ListOpts{})
 	return ldapconfig.Data[0].Enabled, err
+}
+
+func azureadconfigEnabled(rClient *client.RancherClient) (bool, error) {
+	azureadconfig, err := rClient.Azureadconfig.List(&client.ListOpts{})
+	return azureadconfig.Data[0].Enabled, err
 }

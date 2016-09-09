@@ -1,6 +1,7 @@
 {
 	"ImportPath": "github.com/cloudnautique/rbs-sandbox",
 	"GoVersion": "go1.5",
+	"GodepVersion": "v74",
 	"Deps": [
 		{
 			"ImportPath": "github.com/Sirupsen/logrus",
@@ -22,8 +23,8 @@
 		},
 		{
 			"ImportPath": "github.com/rancher/go-rancher/client",
-			"Comment": "v0.1.0-144-gf2fdaec",
-			"Rev": "f2fdaec4b9436141c654ec9a6b516b355dd954df"
+			"Comment": "v0.1.0-172-g5513724",
+			"Rev": "55137245b69fb3e99b2f12a2eead09a02bf19b68"
 		},
 		{
 			"ImportPath": "golang.org/x/sys/unix",

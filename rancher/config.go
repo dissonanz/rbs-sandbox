@@ -9,6 +9,7 @@ type RancherServerConfig struct {
 type RancherBootstrapConfig struct {
 	Server              *RancherServerConfig
 	LdapConfig          *client.Ldapconfig
+	AzureadConfig       *client.Azureadconfig
 	Accounts            map[string]*client.Account
 	Projects            map[string]*client.Project
 	Memberships         map[string]map[string]*client.Identity `json:"memberships" yaml:"memberships"`
